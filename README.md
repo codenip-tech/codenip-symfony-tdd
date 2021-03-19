@@ -1,6 +1,4 @@
-# docker-dev-env-for-symfony
-
-This repository contains the basic configuration for a complete local environment for Symfony projects
+# codenip-symfony-tdd-symfony
 
 ### Content:
 - NGINX 1.19 container to handle HTTP requests
