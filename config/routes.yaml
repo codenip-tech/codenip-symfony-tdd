@@ -6,3 +6,8 @@ api_health_check:
   path: /api/v1/health-check
   controller: App\Controller\HealthCheckController
   methods: [GET]
+
+api_register_user:
+  path: /api/v1/users/register
+  controller: App\Controller\User\RegisterController
+  methods: [POST]
