@@ -19,9 +19,11 @@
         "symfony/proxy-manager-bridge": "5.2.*",
         "symfony/security-bundle": "5.2.*",
         "symfony/uid": "5.2.*",
+        "symfony/validator": "5.2.*",
         "symfony/yaml": "5.2.*"
     },
     "require-dev": {
+        "hautelook/alice-bundle": "^2.9",
         "symfony/browser-kit": "5.2.*",
         "symfony/phpunit-bridge": "^5.2"
     },

@@ -4,45 +4,28 @@ declare(strict_types=1);
 
 namespace App\Controller\User;
 
-use App\Entity\User;
-use App\Repository\UserRepository;
+use App\Http\DTO\RegisterRequest;
+use App\Service\RegisterService;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class RegisterController
 {
-    private UserRepository $userRepository;
-    private UserPasswordEncoderInterface $userPasswordEncoder;
-
-    public function __construct(UserRepository $userRepository, UserPasswordEncoderInterface $userPasswordEncoder)
+    public function __construct(private RegisterService $registerService)
     {
-        $this->userRepository = $userRepository;
-        $this->userPasswordEncoder = $userPasswordEncoder;
     }
 
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(RegisterRequest $request): JsonResponse
     {
-        $data = \json_decode($request->getContent(), true);
+        $user = $this->registerService->__invoke($request);
 
-        if (!\array_key_exists('name', $data)) {
-            throw new BadRequestHttpException('name is mandatory');
-        }
-
-        if (!\array_key_exists('email', $data)) {
-            throw new BadRequestHttpException('email is mandatory');
-        }
-
-        if (!\array_key_exists('password', $data)) {
-            throw new BadRequestHttpException('password is mandatory');
-        }
-
-        $user = new User($data['name'], $data['email']);
-        $user->setPassword($this->userPasswordEncoder->encodePassword($user, $data['password']));
-
-        $this->userRepository->save($user);
-
-        return new JsonResponse(null, JsonResponse::HTTP_CREATED);
+        return new JsonResponse(
+            [
+                'user' => [
+                    'id' => $user->getId(),
+                    'name' => $user->getName(),
+                    'email' => $user->getEmail(),
+                ],
+            ], JsonResponse::HTTP_CREATED
+        );
     }
 }

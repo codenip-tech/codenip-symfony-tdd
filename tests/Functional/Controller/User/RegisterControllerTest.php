@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\Controller\User;
 
+use Hautelook\AliceBundle\PhpUnit\RecreateDatabaseTrait;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -11,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RegisterControllerTest extends WebTestCase
 {
+    use RecreateDatabaseTrait;
+
     private const ENDPOINT = '/api/v1/users/register';
 
     private static ?KernelBrowser $client = null;
