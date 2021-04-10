@@ -11,16 +11,19 @@ class RegisterRequest implements RequestDTO
 {
     /**
      * @Assert\NotBlank()
+     * @Assert\Length(min=2)
      */
     private ?string $name;
 
     /**
      * @Assert\NotBlank()
+     * @Assert\Email()
      */
     private ?string $email;
 
     /**
      * @Assert\NotBlank()
+     * @Assert\Length(min=6)
      */
     private ?string $password;
 

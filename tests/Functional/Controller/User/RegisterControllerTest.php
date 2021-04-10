@@ -84,4 +84,49 @@ class RegisterControllerTest extends WebTestCase
 
         self::assertEquals(JsonResponse::HTTP_BAD_REQUEST, $response->getStatusCode());
     }
+
+    public function testRegisterUserWithInvalidName(): void
+    {
+        $payload = [
+            'name' => 'a',
+            'email' => 'juan@api.com',
+            'password' => 'password123'
+        ];
+
+        self::$client->request(Request::METHOD_POST, self::ENDPOINT, [], [], [], \json_encode($payload));
+
+        $response = self::$client->getResponse();
+
+        self::assertEquals(JsonResponse::HTTP_BAD_REQUEST, $response->getStatusCode());
+    }
+
+    public function testRegisterUserWithInvalidEmail(): void
+    {
+        $payload = [
+            'name' => 'Juan',
+            'email' => 'api.com',
+            'password' => 'password123'
+        ];
+
+        self::$client->request(Request::METHOD_POST, self::ENDPOINT, [], [], [], \json_encode($payload));
+
+        $response = self::$client->getResponse();
+
+        self::assertEquals(JsonResponse::HTTP_BAD_REQUEST, $response->getStatusCode());
+    }
+
+    public function testRegisterUserWithInvalidPassword(): void
+    {
+        $payload = [
+            'name' => 'Juan',
+            'email' => 'juan@api.com',
+            'password' => 'pass'
+        ];
+
+        self::$client->request(Request::METHOD_POST, self::ENDPOINT, [], [], [], \json_encode($payload));
+
+        $response = self::$client->getResponse();
+
+        self::assertEquals(JsonResponse::HTTP_BAD_REQUEST, $response->getStatusCode());
+    }
 }
